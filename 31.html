@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单（三）联动</title>
+	<style>
+		#header{
+			padding-top: 50px;
+			padding-bottom: 50px;
+		}
+		#container,#b{
+			padding-bottom: 50px;
+			display: none;
+		}
+		#l,#le,#r,#rt,#city,#school{
+			cursor: pointer;
+			float: left;
+			margin-left: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div id="header">
+		<div id="left">
+			<input type="radio" name="student" id="l">
+			<label for="student" id="le">在校生</label>
+		</div>
+		<div id="right">
+			<input type="radio" name="student" id="r">
+			<label for="nonstudent" id="rt">非在校生</label>
+		</div>
+	</div>
+	<div id="container">
+	<form name="frm">
+		<select name="s1" onChange="redirec(document.frm.s1.options.selectedIndex)">
+			<option value="0">北京</option>
+			<option value="1">上海</option>
+			<option value="2">陕西</option>
+			<option value="3">江苏</option>
+		</select>
+		<select name="s2">
+			<option value="school" selected>北京大学</option>
+		</select>
+	</form>
+	</div>
+	<div id="b">
+		<label for="office">就业单位</label>
+		<input type="text" id="company">
+	</div>
+</body>
+<script>
+	var oLeft = document.getElementById('left');
+	var oRight = document.getElementById('right');
+	var oContainer = document.getElementById('container');
+	var oB = document.getElementById('b');
+	var oSchool = document.getElementById('s2');
+	var oCity = document.getElementById('s1');
+	oLeft.onclick = function(){
+		oB.style.display = "none";
+		oContainer.style.display = "block";
+	}
+	oRight.onclick = function(){
+		oContainer.style.display = "none";
+		oB.style.display = "block";
+	}
+	//获取一级菜单长度
+	var select1_len = document.frm.s1.options.length;
+	var select2 = new Array(select1_len);
+	//把一级菜单都设为数组
+	for (i=0; i<select1_len; i++){
+		select2[i] = new Array();
+	}
+	//定义基本选项
+	select2[0][0] = new Option("北京大学", " ");
+	select2[0][1] = new Option("北京工业大学", " ");
+	select2[0][2] = new Option("中国人民大学", " ");
+	select2[0][3] = new Option("北京航空航天大学", " ");
+
+	select2[1][0] = new Option("复旦大学", " ");
+	select2[1][1] = new Option("上海交通大学", " ");
+	select2[1][2] = new Option("上海财经大学", " ");
+	select2[1][3] = new Option("同济大学", " ");
+
+	select2[2][0] = new Option("长安大学", " ");
+	select2[2][1] = new Option("西安交通大学", " ");
+	select2[2][2] = new Option("西北工业大学", " ");
+	select2[2][3] = new Option("西安电子科技大学", " ");
+
+	select2[3][0] = new Option("南京大学", " ");
+	select2[3][1] = new Option("南京航天航空大学", " ");
+	select2[3][2] = new Option("东南大学", " ");
+	select2[3][3] = new Option("河海大学", " ");
+	//联动函数
+	function redirec(x){
+		var temp = document.frm.s2;
+		for(i=0;i<select2[x].length;i++){
+			temp.options[i]=new Option(select2[x][i].text,select2[x][i].value);
+		}
+		temp.options[0].selected=true;
+	}
+</script>
+</html>
